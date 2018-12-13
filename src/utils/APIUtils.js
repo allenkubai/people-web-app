@@ -2,7 +2,7 @@ import { API_BASE_URL,DEFAULT_PAGE_SIZE } from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
-        'Content-Type': 'application/hal+json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
     })
 
     const defaults = {headers: headers};
