@@ -26,7 +26,8 @@ export function getAllPeople(page, size) {
 
     return request({
         url: API_BASE_URL + "/people?page=" + page + "&size=" + size,
-        method: 'GET'
+        method: 'GET',
+        mode: 'no-cors'
     });
 }
 
