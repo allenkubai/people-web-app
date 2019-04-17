@@ -23,7 +23,7 @@ class App extends Component {
       placement: 'topRight',
       top: 70,
       duration: 3,
-    });
+    });    
   }
 
   render() {
@@ -33,13 +33,15 @@ class App extends Component {
     return (
         <Layout className="app-container">
           <AppHeader/>
+
           <Content className="app-content">
             <div className="container">
-              <Switch>
-                <Route exact path="/"
+              <Switch>      
+                <Route exact path="/" 
                   render={(props) => <PeopleList {...props} />}>
                 </Route>
-                <Route exact path="/new" component={NewPerson}/>
+                <Route path="/person/new" component={NewPerson}></Route> 
+               
               </Switch>
             </div>
           </Content>

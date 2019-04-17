@@ -1,7 +1,8 @@
 def project = 'people-service-web-app'
 def appName = 'people-web-app'
-def tenancy='gse00013828'
-def imageTag = "iad.ocir.io/${tenancy}/oracleimc/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+def tenancy='redtrial'
+def ocir='fra.ocir.io'
+def imageTag = "${ocir}/${tenancy}/oracleimc/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
 	  agent {
@@ -62,7 +63,7 @@ spec:
 		stage('Build Image and push'){
 			steps {
 				container('docker') {
-		    		withDockerRegistry(credentialsId: 'ocir-credentials', url: 'https://iad.ocir.io') {
+		    		withDockerRegistry(credentialsId: 'ocir-credentials', url: "https://${ocir}") {
 					      sh """
 				            docker build -t ${imageTag} .
 				            docker push ${imageTag}
@@ -74,11 +75,8 @@ spec:
 		}
 		stage('Deploy To Kubernetes'){
 			environment {
-                KUBECONFIG = credentials('oci-kubernetes')
-            }
-            options {
-			    withKubeConfig(caCertificate: '', contextName: '', credentialsId: 'oci-kubernetes', serverUrl: '')
-			}
+        KUBECONFIG = credentials('oci-kubernetes')
+      }
 			steps {
 				container('kubectl') {
 		    		sh 'kubectl get pods'
