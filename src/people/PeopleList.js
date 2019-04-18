@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Person from './Person';
-import LoadingIndicator  from '../common/LoadingIndicator';
+import LoadingIndicator from '../common/LoadingIndicator';
 import { Button, Icon } from 'antd';
 import { DEFAULT_PAGE_SIZE } from '../constants';
 import { withRouter } from 'react-router-dom';
 import './PeopleList.css';
-import { getAllPeople } from '../utils/APIUtils';
+import peopleservice from '../api/peopleservice';
 
 class PeopleList extends Component {
     constructor(props) {
@@ -19,41 +19,31 @@ class PeopleList extends Component {
             last: true,
             isLoading: false
         };
-        this.loadPeopleList = this.loadPeopleList.bind(this);
-        this.handleLoadMore = this.handleLoadMore.bind(this);
+
     }
 
-    loadPeopleList(page = 0, size = DEFAULT_PAGE_SIZE) {
-        let promise;
-
-        promise = getAllPeople(page, size);
-
-
-        if(!promise) {
-            return;
-        }
-
+    loadPeopleList = async (page = 0, size = DEFAULT_PAGE_SIZE) => {
         this.setState({
             isLoading: true
         });
 
-        promise
-        .then(response => {
-            const people = this.state.people.slice();
+        const response = await peopleservice.get('/people', {
+            params: {
+                page: page,
+                size: size
+            }
+        });
 
-            this.setState({
-                people: people.concat(response._embedded.people),
-                page: response.page.number,
-                size: response.page.size,
-                totalElements: response.page.totalElements,
-                totalPages: response.page.totalPages,
-                last: response.last,
-                isLoading: false
-            })
-        }).catch(error => {
-            this.setState({
-                isLoading: false
-            })
+        const people = this.state.people.slice();
+        const p = response.data;
+        this.setState({
+            people: people.concat(p._embedded.people),
+            page: p.page.number,
+            size: p.page.size,
+            totalElements: p.page.totalElements,
+            totalPages: p.page.totalPages,
+            last: p.last,
+            isLoading: false
         });
 
     }
@@ -63,7 +53,7 @@ class PeopleList extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.props.isAuthenticated !== nextProps.isAuthenticated) {
+        if (this.props.isAuthenticated !== nextProps.isAuthenticated) {
             // Reset State
             this.setState({
                 people: [],
@@ -79,7 +69,7 @@ class PeopleList extends Component {
         }
     }
 
-    handleLoadMore() {
+    handleLoadMore = () => {
         this.loadPeopleList(this.state.page + 1);
     }
 
@@ -89,7 +79,7 @@ class PeopleList extends Component {
             peopleViews.push(<Person
                 key={person.id}
                 person={person}
-                />)
+            />)
         });
 
         return (
@@ -100,7 +90,7 @@ class PeopleList extends Component {
                         <div className="no-polls-found">
                             <span>No people Found.</span>
                         </div>
-                    ): null
+                    ) : null
                 }
                 {
                     !this.state.isLoading && !this.state.last ? (
@@ -108,11 +98,11 @@ class PeopleList extends Component {
                             <Button type="dashed" onClick={this.handleLoadMore} disabled={this.state.isLoading}>
                                 <Icon type="plus" /> Load more
                             </Button>
-                        </div>): null
+                        </div>) : null
                 }
                 {
                     this.state.isLoading ?
-                    <LoadingIndicator />: null
+                        <LoadingIndicator /> : null
                 }
             </div>
         );

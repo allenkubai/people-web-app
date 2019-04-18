@@ -32,19 +32,19 @@ class NewPerson extends Component {
         };
 
         createPerson(personData)
-        .then(response => {
-            this.props.history.push("/");
-        }).catch(error => {
+            .then(response => {
+                this.props.history.push("/");
+            }).catch(error => {
                 notification.error({
                     message: 'People App',
                     description: error.message || 'Sorry! Something went wrong. Please try again!'
                 });
 
-        });
+            });
     }
 
     validateFirstName = (firstNameText) => {
-        if(firstNameText.length === 0) {
+        if (firstNameText.length === 0) {
             return {
                 validateStatus: 'error',
                 errorMsg: 'Please enter your First Name!'
@@ -54,7 +54,7 @@ class NewPerson extends Component {
                 validateStatus: 'error',
                 errorMsg: `First Name is too long (Maximum ${FIRSTNAME_MAX_LENGTH} characters allowed)`
             }
-        }else {
+        } else {
             return {
                 validateStatus: 'success',
                 errorMsg: null
@@ -73,7 +73,7 @@ class NewPerson extends Component {
     }
 
     validateLastName = (lastNameText) => {
-        if(lastNameText.length === 0) {
+        if (lastNameText.length === 0) {
             return {
                 validateStatus: 'error',
                 errorMsg: 'Please enter your Last Name!'
@@ -102,11 +102,11 @@ class NewPerson extends Component {
     }
 
     isFormInvalid() {
-        if(this.state.firstName.validateStatus !== 'success') {
+        if (this.state.firstName.validateStatus !== 'success') {
             return true;
         }
 
-        if(this.state.lastName.validateStatus !== 'success') {
+        if (this.state.lastName.validateStatus !== 'success') {
             return true;
         }
     }
@@ -120,21 +120,21 @@ class NewPerson extends Component {
                     <Form onSubmit={this.handleSubmit} className="create-poll-form">
                         <FormItem validateStatus={this.state.firstName.validateStatus}
                             help={this.state.firstName.errorMsg} className="poll-form-row">
-                        <Input
-                            placeholder="Enter your First Name"
-                            style = {{ fontSize: '16px' }}
-                            name = "FirstName"
-                            value = {this.state.firstName.text}
-                            onChange = {this.handleFirstNameChange} />
+                            <Input
+                                placeholder="Enter your First Name"
+                                style={{ fontSize: '16px' }}
+                                name="FirstName"
+                                value={this.state.firstName.text}
+                                onChange={this.handleFirstNameChange} />
                         </FormItem>
                         <FormItem validateStatus={this.state.lastName.validateStatus}
                             help={this.state.lastName.errorMsg} className="poll-form-row">
-                        <Input
-                            placeholder="Enter your Last Name"
-                            style = {{ fontSize: '16px' }}
-                            name = "LastName"
-                            value = {this.state.lastName.text}
-                            onChange = {this.handleLastNameChange} />
+                            <Input
+                                placeholder="Enter your Last Name"
+                                style={{ fontSize: '16px' }}
+                                name="LastName"
+                                value={this.state.lastName.text}
+                                onChange={this.handleLastNameChange} />
                         </FormItem>
                         <FormItem className="poll-form-row">
                             <Button type="primary"

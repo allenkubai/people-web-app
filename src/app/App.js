@@ -23,29 +23,28 @@ class App extends Component {
       placement: 'topRight',
       top: 70,
       duration: 3,
-    });    
+    });
   }
 
   render() {
-    if(this.state.isLoading) {
-      return <LoadingIndicator/>
+    if (this.state.isLoading) {
+      return <LoadingIndicator />
     }
     return (
-        <Layout className="app-container">
-          <AppHeader/>
+      <Layout className="app-container">
+        <AppHeader />
 
-          <Content className="app-content">
-            <div className="container">
-              <Switch>      
-                <Route exact path="/" 
-                  render={(props) => <PeopleList {...props} />}>
-                </Route>
-                <Route path="/person/new" component={NewPerson}></Route> 
-               
-              </Switch>
-            </div>
-          </Content>
-        </Layout>
+        <Content className="app-content">
+          <div className="container">
+            <Switch>
+              <Route exact path="/"
+                render={(props) => <PeopleList {...props} />}>
+              </Route>
+              <Route path="/new" component={NewPerson} />
+            </Switch>
+          </div>
+        </Content>
+      </Layout>
     );
   }
 }
