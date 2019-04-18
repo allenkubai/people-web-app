@@ -19,7 +19,7 @@ spec:
         image: iad.ocir.io/gse00013828/oracleimc/people-web-app:1.0
         env:
          - name: REACT_APP_API_BASE_URL
-           value: "http://people-service:8080"
+           value: "http://people-service"
         ports:
         - containerPort: 5000
           name: people-web-app
@@ -37,6 +37,6 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort:5000
+      targetPort: 5000
   selector:
     app: people-web-app
