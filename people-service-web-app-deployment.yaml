@@ -21,7 +21,7 @@ spec:
          - name: REACT_APP_API_BASE_URL
            value: "http://people-service"
         ports:
-        - containerPort: 3000
+        - containerPort: 5000
           name: people-web-app
       imagePullSecrets:
        - name: ocirsecret
@@ -37,6 +37,6 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 5000
   selector:
     app: people-web-app
