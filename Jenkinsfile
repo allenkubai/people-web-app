@@ -48,6 +48,9 @@ spec:
 """
 }
   }
+  triggers {
+        pollSCM ('* * * * *')
+    }
 	stages {
 		stage('Build React Application'){
 			steps {
@@ -82,6 +85,7 @@ spec:
 		    		sh 'kubectl get pods'
 		    		sh("sed -i.bak 's#iad.ocir.io/gse00013828/oracleimc/people-web-app:1.0#${imageTag}#' ./people-service-web-app-deployment.yaml")
 		    		sh("kubectl apply -f people-service-web-app-deployment.yaml")
+            sh("echo `kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[*].ip}' --all-namespaces`")
 	    		}
 
 			}
