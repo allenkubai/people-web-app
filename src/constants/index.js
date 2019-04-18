@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://10.96.40.66:8080/'
+export const API_BASE_URL = 'http://people-service:8080/'
 
 export const DEFAULT_PAGE_SIZE = 10;
 
