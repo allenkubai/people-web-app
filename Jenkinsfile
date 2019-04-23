@@ -84,7 +84,9 @@ spec:
 				container('kubectl') {
 		    		sh 'kubectl get pods'
 		    		sh("sed -i.bak 's#iad.ocir.io/gse00013828/oracleimc/people-web-app:1.0#${imageTag}#' ./people-service-web-app-deployment.yaml")
-		    		sh("kubectl apply -f people-service-web-app-deployment.yaml")
+		    		sh("kubectl apply -f ./k8s/deployments/people-service-web-app-deployment.yaml")
+            sh("kubectl apply -f ./k8s/services/people-service-web-app.yaml")
+            sh("kubectl apply -f ./k8s/services/ingress.yaml")
             sh("echo `kubectl get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[*].ip}' --all-namespaces`")
 	    		}
 

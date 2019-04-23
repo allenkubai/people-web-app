@@ -27,7 +27,7 @@ class AppHeader extends Component {
       <Header className="app-header">
         <div className="container">
           <div className="app-title" >
-            <Link to="/">People App 1</Link>
+            <Link to="/">People App</Link>
           </div>
           <Menu
             className="app-menu"

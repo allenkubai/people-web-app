@@ -25,18 +25,4 @@ spec:
           name: people-web-app
       imagePullSecrets:
        - name: ocirsecret
----
-#People Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: people-web-app
-  labels:
-    app: people-web-app
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 80
-      targetPort: 5000
-  selector:
-    app: people-web-app
+
